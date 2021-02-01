@@ -115,6 +115,13 @@ func Benchmark_Marshal_StructToBytes_3(b *testing.B) {
 	}
 }
 
+func Benchmark_Unmarshal_ToMap(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		response := make(map[string]interface{})
+		json.Unmarshal([]byte(jsonStr), &response)
+	}
+}
+
 func Benchmark_Unmarshal_ToStruct(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		response := struct {
@@ -122,13 +129,6 @@ func Benchmark_Unmarshal_ToStruct(b *testing.B) {
 				Items []Article `json:"items"`
 			} `json:"data"`
 		}{}
-		json.Unmarshal([]byte(jsonStr), &response)
-	}
-}
-
-func Benchmark_Unmarshal_ToMap(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		response := make(map[string]interface{})
 		json.Unmarshal([]byte(jsonStr), &response)
 	}
 }
