@@ -14,21 +14,7 @@ func Benchmark_MarshalIndent_MapToBytes(b *testing.B) {
 				"items": items,
 			},
 		}
-
 		json.MarshalIndent(responseMap, "", "  ")
-	}
-}
-
-func Benchmark_Marshal_MapToBytes(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		var items []interface{} = getMapInterface()
-		responseMap := map[string]interface{}{
-			"data": map[string]interface{}{
-				"items": items,
-			},
-		}
-
-		json.Marshal(responseMap)
 	}
 }
 
@@ -40,7 +26,6 @@ func Benchmark_MarshalIndent_StructToBytes_1(b *testing.B) {
 				"items": items,
 			},
 		}
-
 		json.MarshalIndent(responseMap, "", "  ")
 	}
 }
@@ -71,8 +56,43 @@ func Benchmark_MarshalIndent_StructToBytes_3(b *testing.B) {
 				Items: items,
 			},
 		}
-
 		json.MarshalIndent(response, "", "  ")
+	}
+}
+
+func Benchmark_Marshal_MapToBytes(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		var items []interface{} = getMapInterface()
+		responseMap := map[string]interface{}{
+			"data": map[string]interface{}{
+				"items": items,
+			},
+		}
+		json.Marshal(responseMap)
+	}
+}
+
+func Benchmark_Marshal_StructToBytes_1(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		var items []interface{} = getArticleToInterface()
+		responseMap := map[string]interface{}{
+			"data": map[string]interface{}{
+				"items": items,
+			},
+		}
+		json.Marshal(responseMap)
+	}
+}
+
+func Benchmark_Marshal_StructToBytes_2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		var items []Article = getArticles()
+		responseMap := map[string]interface{}{
+			"data": map[string][]Article{
+				"items": items,
+			},
+		}
+		json.Marshal(responseMap)
 	}
 }
 
